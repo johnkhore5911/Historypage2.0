@@ -7,7 +7,8 @@ const Header = () => {
   const navigate = useNavigate(); // Hook for navigation
 
   const handleLoginClick = () => {
-    navigate('/login'); // Replace '/login' with your login page route
+    navigate('/login');
+    
   };
 
   return (

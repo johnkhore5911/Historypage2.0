@@ -56,7 +56,10 @@ const DataUpload = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-console.log('helo')
+    console.log('helo')
+    console.log("Title: ",title);
+    console.log("Title: ",description);
+    console.log("Title: ",images.length);
     if (!title || !description || images.length === 0) {
       setError('Please fill all fields and upload at least one image.');
       return;
