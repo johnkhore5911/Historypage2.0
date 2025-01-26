@@ -10,7 +10,7 @@ const Content = () => {
     // Fetch user data
     useEffect(() => {
     axios
-      .get("https://history-page-backend-x2dq.vercel.app/api/user/getAllUsers")
+      .get('https://history-page-backend-x2dq.vercel.app/api/user/getAllUsers')
       .then((response) => {
         setUsers(response.data);
         setActiveImage(response.data.map(() => 0)); // Initialize activeImage state
@@ -84,6 +84,9 @@ const Content = () => {
 };
 
 export default Content;
+
+
+
 
 
 

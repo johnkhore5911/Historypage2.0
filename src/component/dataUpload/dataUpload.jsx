@@ -1,8 +1,48 @@
+// import React from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import axios from 'axios';
+
+// const DataUpload = () => {
+//   const navigate = useNavigate();
+
+//   useEffect(() => {
+//     const token = localStorage.getItem('jwtToken');
+
+//     if (!token) {
+//       navigate('/login');
+//     } else {
+//       // Optional: Verify token with the backend
+//       axios
+//         .post('https://historypage-cyan.vercel.app/api/user/verify-token', { token })
+//         .then((response) => {
+//           if (!response.data.verified) {
+//             navigate('/login');
+//           }
+//         })
+//         .catch(() => {
+//           navigate('/login');
+//         });
+//     }
+//   }, [navigate]);
+
+//   return (
+//     <div>
+//       <h1>Data Upload</h1>
+//       <p>Welcome! You can now upload your data.</p>
+//     </div>
+//   );
+// };
+
+// export default DataUpload;
+
+
+
+
 import React, { useState } from 'react';
 import axios from 'axios';
 import './dataUpload.css'; // Add CSS for styling the form
 
-const dataUpload = () => {
+const DataUpload = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [images, setImages] = useState([]);
@@ -16,7 +56,7 @@ const dataUpload = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+console.log('helo')
     if (!title || !description || images.length === 0) {
       setError('Please fill all fields and upload at least one image.');
       return;
@@ -93,10 +133,11 @@ const dataUpload = () => {
         {error && <p className="error">{error}</p>}
         {message && <p className="success">{message}</p>}
 
-        <button type="submit">Upload Event</button>
+        <button type="submit"
+        onClick={handleSubmit}>Upload Event</button>
       </form>
     </div>
   );
 };
 
-export default dataUpload;
+export default DataUpload;

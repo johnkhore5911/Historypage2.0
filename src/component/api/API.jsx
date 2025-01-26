@@ -1,8 +1,5 @@
-// api.js
-import axios from 'axios';
+import React from "react";
+const PostAPI ='https://history-page-backend-x2dq.vercel.app/api/user/createImg'
+const GetAPI ='https://history-page-backend-x2dq.vercel.app/api/user/getAllUsers'
 
-const API = axios.create({
-  baseURL:'https://historypage-cyan.vercel.app/api/user/createImg',
-});
-
-export default API;
+export default { PostAPI, GetAPI };
