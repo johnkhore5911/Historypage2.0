@@ -1,93 +1,88 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import "./Content.css";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './Content.css';
 
 const Content = () => {
-  const [activeImage, setActiveImage] = useState([]); // To track the active image for each user
-  
-   const [users, setUsers] = useState([]);
+  const [data, setData] = useState([]);
+  const [activeImageIndex, setActiveImageIndex] = useState([]);
 
-    // Fetch user data
-    useEffect(() => {
-    axios
-      .get('https://history-page-backend-x2dq.vercel.app/api/user/getAllUsers')
-      .then((response) => {
-        setUsers(response.data);
-        setActiveImage(response.data.map(() => 0)); 
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://historypage-cyan.vercel.app/api/user/getAllUsers');
+        console.log('API Response:', response.data);
+
+        if (!Array.isArray(response.data)) {
+          throw new Error('Data is not in expected format');
+        }
+
+        const formattedData = response.data.map((item) => ({
+          ...item,
+          Image: Array.isArray(item.Image) ? item.Image : [],
+        }));
+
+        setData(formattedData);
+        setActiveImageIndex(formattedData.map(() => 0)); // Initialize all image indexes at 0
+      } catch (err) {
+        console.error('Fetch error:', err);
       }
-    );
-   },[])
-  
-  const handlePrevImage = (index) => {
-    setActiveImage((prev) =>
-      prev.map((imgIndex, i) =>
-        i === index ? (imgIndex > 0 ? imgIndex - 1 : users[index].Image.length - 1) : imgIndex
-      ));
-  };
+    };
 
-  const handleNextImage = (index) => {
-    setActiveImage((prev) =>
-      prev.map((imgIndex, i) =>
-        i === index ? (imgIndex + 1) % users[index].Image.length : imgIndex
-      )
-    );
+    fetchData();
+  }, []);
+
+  // Auto-slide images every 2 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveImageIndex((prevIndexes) =>
+        prevIndexes.map((index, i) =>
+          data[i]?.Image.length > 1 ? (index + 1) % data[i].Image.length : index
+        )
+      );
+    }, 2000); // Change image every 2 seconds
+
+    return () => clearInterval(interval);
+  }, [data]);
+
+  const handleImageError = (e) => {
+    console.error('Image failed to load:', e.target.src);
+    e.target.src = 'https://via.placeholder.com/400x300?text=Image+Not+Available';
+    e.target.classList.add('error-image');
   };
 
   return (
-    <div className="App">
-      {/* Display users */}
-      <div className="user-grid">
-        {users.map((user, index) => (
-          <div className="user-block" key={index}>
-            <div className="user-header">
-             
-             <div className="header"> <h2>{user.title}</h2></div>
-            </div>
-            <div className="user-images">
-              <button
-                className="arrow left"
-                onClick={() => handlePrevImage(index)}
-              >
-                &#9664;
-              </button>
-              {user.Image && user.Image.length > 0 ? (
+    <main className="content">
+      <div className="content-grid">
+        {data.map((item, index) => (
+          <article key={item._id || index} className="content-card">
+            <div className="image-container">
+              {item.Image.length > 0 ? (
                 <img
-                  src={user.Image[activeImage[index]]}
-                  alt={`Event ${user.title}`}
-                  onError={(e) => {
-                    e.target.src = "https://via.placeholder.com/300"; // Fallback image
-                    e.target.alt = "Image not available";
-                  }}
+                  src={item.Image[activeImageIndex[index]]}
+                  alt={item.title || 'Content image'}
+                  className="content-image fade-in"
+                  onError={handleImageError}
                 />
               ) : (
-                <p>No images available</p>
+                <div className="no-image">
+                  <span>No image available</span>
+                </div>
               )}
-              <button
-                className="arrow right"
-                onClick={() => handleNextImage(index)}
-      >
-             <pre> &#9654;</pre>  
-              </button>
             </div>
-            
-            <div className="user-body">
-              <p>{user.description}</p>
+            <div className="card-content">
+              <h2>{item.title || 'Untitled'}</h2>
+              <p>{item.description || 'No description available'}</p>
+              {item.Image.length > 1 && (
+                <small className="image-counter">
+                  Image {activeImageIndex[index] + 1} of {item.Image.length}
+                </small>
+              )}
             </div>
-          </div>
+          </article>
         ))}
       </div>
-   </div>
+    </main>
   );
 };
 
 export default Content;
-
-
-
-
-
-
-

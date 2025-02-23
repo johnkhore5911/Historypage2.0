@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const LoginPage = () => {
+const SignupPage = () => {
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    Password: '',
+    secretKey: ''
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -24,14 +25,14 @@ const LoginPage = () => {
     setError('');
     setIsLoading(true);
 
-    if (!formData.email || !formData.password) {
+    if (!formData.email || !formData.Password || !formData.secretKey) {
       setError('Please fill in all required fields');
       setIsLoading(false);
       return;
     }
 
     try {
-      const response = await fetch("https://historypage-cyan.vercel.app/api/user/login", {
+      const response = await fetch("https://historypage-cyan.vercel.app/api/user/signup", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,8 +46,8 @@ const LoginPage = () => {
         throw new Error(data.message || 'An error occurred');
       }
 
-      console.log('Login Successful:', data);
-      navigate("/data-upload"); // Redirect after login
+      console.log('Signup Successful:', data);
+      navigate("/data-upload"); // Redirect after signup
 
     } catch (error) {
       setError(error.message || 'An error occurred. Please try again.');
@@ -59,7 +60,7 @@ const LoginPage = () => {
     <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
-          Welcome Back
+          Create Account
         </h2>
 
         {error && (
@@ -91,13 +92,30 @@ const LoginPage = () => {
               Password
             </label>
             <input
-              id="password"
-              name="password"
+              id="Password"
+              name="Password"
               type="password"
               required
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="Enter your password"
-              value={formData.password}
+              value={formData.Password}
+              onChange={handleChange}
+              disabled={isLoading}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="secretKey" className="block text-sm font-medium text-gray-700 mb-1">
+              Secret Key
+            </label>
+            <input
+              id="secretKey"
+              name="secretKey"
+              type="text"
+              required
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Enter your secret key"
+              value={formData.secretKey}
               onChange={handleChange}
               disabled={isLoading}
             />
@@ -108,16 +126,16 @@ const LoginPage = () => {
             className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             disabled={isLoading}
           >
-            {isLoading ? 'Processing...' : 'Sign In'}
+            {isLoading ? 'Processing...' : 'Sign Up'}
           </button>
         </form>
 
         <div className="mt-6 text-center">
           <button
-            onClick={() => navigate('/signup')}
+            onClick={() => navigate('/login')}
             className="text-blue-600 hover:text-blue-800 font-medium"
           >
-            Don't have an account? Sign Up
+            Already have an account? Log In
           </button>
         </div>
       </div>
@@ -125,4 +143,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SignupPage;

@@ -1,89 +1,50 @@
+
 .footer {
-    background-color: #222;
-    color: #fff;
-    padding: 20px 0;
-  }
-  
-  .footer-sections {
-    display: flex;
-    justify-content: space-around; /* Evenly distribute the sections */
-    align-items: flex-start; /* Align sections at the top */
-    flex-wrap: wrap; /* Make responsive for smaller screens */
-  }
-  
-  .footer-section {
-    flex: 1; /* Equal width for each section */
-    min-width: 200px; /* Minimum width for smaller screens */
-    margin: 10px;
-  }
-  
-  .footer-section ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .footer-section li {
-    margin-bottom: 10px;
-  }
-  
-  .footer-section a {
-    color: #fff;
-    text-decoration: none;
-  }
-  
-  .footer-section a:hover {
-    text-decoration: underline;
-  }
-  
-
-  
-  .footer_top
-  {
-    height: 50px;
-    background-color: #37475a;
-    display: flex ;
-  justify-content: center;  
-  align-items: center;
-  font-size: 0.85rem;
- }
- .footer_bottom{
-background-color: #232F3E;
-height: 300px;
-display: flex;
-justify-content: space-evenly;
-
- }
- ul{
-  margin-top: 20px;
- }
- ul a {
-  margin-top: 10px;
-display: block;
-
-font-size:0.85rem ;
- }
-
-.foot-panel3{
-  border-top: 0.5px solid white;
-  height: 70px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-background-color: #232F3E;
+  background-color: #1a1a1a;
+  color: white;
+  padding: 1.5rem 1rem;
 }
 
-.foot-panel4{
-  height: 80px;
-  background-color: #0f1111;
- text-align: center;}
+.footer-content {
+  max-width: 1280px;
+  margin: 0 auto;
+}
 
-.copyright{
-  margin-top:5px ;
-  font-size:0.7rem ;
- 
- }
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+}
 
- .panel{
-  padding-top: 23px;
-  font-size:0.8rem ;
- }
+.footer-section h3 {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section li {
+  margin-bottom: 0.25rem;
+}
+
+.footer-section a {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
+.footer-section a:hover {
+  color: #66b3ff;
+}
+
+.footer-bottom {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #333;
+  text-align: center;
+  color: #888;
+  font-size: 0.875rem;
+}

@@ -1,26 +1,21 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HomePage from './component/home/HomePage';
-import LoginPage from './component/LoginPage/LoginPage'; // Create this LoginPa
-import DataUpload from './component/dataUpload/dataUpload';
-// import VerificationPage from './component/VerificationPage/VerificationPage';
+import HomePage from './component/home/HomePage'
+import LoginPage from './component/LoginPage/LoginPage'
+import DataUpload from './component/DataUpload/DataUpload';
+import SignupPage from './component/LoginPage/SignUp';
 
 function App() {
+  const isAuthenticated = !!localStorage.getItem('jwtToken');
+
   return (
     <Router>
-      <div>
-        
-        <Routes>
-          <Route path="/" element={<HomePage/>} /> 
-          
-          <Route path="/data-Upload" element={<DataUpload/>} />
-          <Route path="/login" element={<LoginPage />} />
-          {/* <Route path="/Verification" element={<VerificationPage />} />  */}
-       
-        </Routes>
-  
-  
-      </div>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/data-upload" element={<DataUpload />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/SignUp" element={<SignupPage />} />
+      </Routes>
     </Router>
   );
 }

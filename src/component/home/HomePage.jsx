@@ -1,17 +1,22 @@
-import React from 'react'
-import Header from '../header/header';
+
+import React from 'react';
+import Header from '../Header/Header';
+import Sidebar from '../sidebar/Sidebar';
+import Content from '../Content/Content';
 import Footer from '../Footer/Footer';
-import Content from '../content/content';
+import './HomePage.css';
 
-
-function HomePage() {
+const HomePage = () => {
   return (
-    <div>
-  <Header/>
-   <Content/>
-   <Footer/>
+    <div className="home-page">
+      <Header />
+      <div className="main-container">
+        <Sidebar />
+        <Content />
+      </div>
+      <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;
